@@ -1,5 +1,9 @@
 <?php require_once("./header.php"); ?>
 
+<br /><div class="alert alert-success" style="text-align:center;"><p class="lead">Quick Start</p> <br /> <a href="./deposit.php" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-export"></span> Upload Media</a> <a href="./retrieve.php" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-th-list"></span> View Media</a></div>
+    
+    <div class="clearfix"></div>
+    
 	<h1>TfEL Media Manager</h1>
 	<p class="lead">Catalogue, encode, and manage media.</p>
 	<p>Welcome to the media manager server, here you can deposit media files for encoding and cataloguing. You can also retrieve media in a user-friendly size for embedding, sharing, and redistribution. This system works automatically, but requires the TfEL iMac to be turned on for the entire duration of uploads – otherwise things will break. Large encodes may require overnight activation of the media-dechunking protocol, and the iMac will not let you shut it down.</p>

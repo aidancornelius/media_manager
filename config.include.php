@@ -58,19 +58,11 @@ $ApplicationConfiguration["ApplicationType"] = "master";
 // You will definitely need to edit this line if you're migrating servers - set to localhost if in development
 $ApplicationConfiguration["LocalHostname"] = "localhost";
 
-// Specify an alternate database host, though, the default engine is SQLite
-$ApplicationConfiguration["DifferentDatabaseHostname"] = false;
-$ApplicationConfiguration["DatabaseHostname"] = "";
-$ApplicationConfiguration["DatabaseHostSSHLogin"] = ""; // If using SQLite we need SSH or WebDAV, though the app doesn't support either.
-
 // Database Configuration - this is usually just the 'local' directory structure, shouldn't need to change it!
 $ApplicationConfiguration["LiteDatabaseFile"] = "./MediaManagerSQLite";
-$ApplicationConfiguration["LiteDatabaseUsername"] = "root";
-$ApplicationConfiguration["LiteDatabasePassword"] = "admin";
-$ApplicationConfiguration["LiteDatabaseDriver"] = "PHPSQLite"; 
 
 // Filesystem Configuration - You'll probably need to change this if you move servers, or at least create the paths here.
-$ApplicationConfiguration["FileDatabaseTemp"] = "/private/tmp"; // Mac :)
+$ApplicationConfiguration["FileDatabaseTemp"] = "./tmp";
 $ApplicationConfiguration["FileDatabaseFinalData"] = "/Library/WebServer/share/media";
 $ApplicationConfiguration["FileDatabaseTrash"] = $ApplicationConfiguration["FileDatabaseFinalData"] . "/.trash";
 
