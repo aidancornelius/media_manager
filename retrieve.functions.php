@@ -28,4 +28,7 @@ function problem_happened ( $error_message ) {
     die();
 }
 
+
+
+
 ?>
