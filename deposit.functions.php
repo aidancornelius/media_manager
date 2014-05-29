@@ -2,18 +2,19 @@
 
 // Deposit functions, this is the code that captures the post, uploads, and all that jazz and inserts it into the sqlite.
 
-include("./config.include.php");
+require("./config.include.php");
+require("./uuid.include.php");
 
-function setup_sqlite_database ($ApplicationConfiguration) {
+function setup_sqlite_database ($SQLiteDatabase) {
     // Make the SQLite a global for this script, god knows where we're going to need it.
-    $GLOBALS['SQLiteDatabaseFile'] = $DatabaseFile = $ApplicationConfiguration["LiteDatabaseFile"];
+    $GLOBALS['SQLDatabaseFile'] = $SQLiteDatabase;
     
     class MediaDB extends SQLite3
     {
         function __construct()
         {
             // We know this database is in the SAME directory as this script ./, so we won't do anything absolute.
-            $database = $GLOBALS['SQLiteDatabaseFile'];
+            $database = $GLOBALS['SQLDatabaseFile'];
             $this->open($database);
         }
     }
@@ -21,6 +22,8 @@ function setup_sqlite_database ($ApplicationConfiguration) {
     $db_socket = new MediaDB();
     // Now $db_socket->exec, ->query, etc are usable.
     // Further $result = $db_socket->query() is able to $result->fetchArray()
+    
+    return $db_socket;
 }
 
 // Error handler that has a nicer gui.
@@ -30,21 +33,23 @@ function problem_happened ( $error_message ) {
     die();
 }
 
-function start_chunking_data ( $recieved_post , $recieved_files ) { 
-    //var_dump($recieved_files['media_file']['tmp_name']);
-    
-    var_dump($recieved_files);
-    var_dump($recieved_post);
-    
-    $target_path = $ApplicationConfiguration["FileDatabaseTemp"];
+function create_unique_media_name () {
+    return $UniqueID = UUID::v4();
+}
 
-    $target_path = $target_path . basename( $_FILES['uploadedfile']['name']); 
+function start_chunking_data ( $recieved_post , $recieved_files, $unique_media_name , $ApplicationConfiguration ) { 
+    return;
+}
 
-    if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
-        echo "The file ".  basename( $_FILES['uploadedfile']['name']). " has been uploaded";
-    } else{
-        problem_happened("500: Your data couldn't be uploaded. Something failed.");
-    }
+function add_media_to_database ( $recieved_post , $recieved_files, $unique_media_name, $ApplicationConfiguration ) { 
+    $media_name = $recieved_post["media_name"];
+    $media_tags = $recieved_post["media_tags"];
+    $media_description = $recieved_post["media_description"];
+    // Setup the database...
+    $db = setup_sqlite_database($ApplicationConfiguration["LiteDatabaseFile"]);
+    $query = 'INSERT INTO "deposit" ("MediaID","MediaFileTag","MediaTitle","MediaTags","MediaDescription") VALUES (NULL,\'' . $unique_media_name . '\',\'' . $media_name . '\',\'' . $media_tags . '\',\'' . $media_description . '\')';
+    //echo $query;
+    $db->exec($query);
 }
 
 // This page has only THIS feature set, there isn't an actual "page" here.
@@ -53,8 +58,14 @@ $recieved_files = $_FILES;
 
 if (!empty($recieved_post)) {
     
-    start_chunking_data($recieved_post, $recieved_files);
+    // Create a unique ID for the media
+    $unique_media_name = create_unique_media_name();
+    // Start doing something with the media, this should pass out to encoder.php
+    start_chunking_data($recieved_post, $recieved_files, $unique_media_name, $ApplicationConfiguration);
+    // Put the new media file in the database..
+    add_media_to_database($recieved_post, $recieved_files, $unique_media_name, $ApplicationConfiguration);
     
+    // Make it look good!
     include("./header.php");
     // Upload them to the temporary directory, add the meta to the database, and twiddle your thumbs!
     echo "<div class=\"bg-info\" style=\"max-width: 570px; padding-left:5px; padding-right:5px; padding-bottom:2px;margin-left: auto; margin-right: auto; border-radius:3px;\"><h1><span class=\"glyphicon glyphicon-import\"></span> Processing media</h1>";
