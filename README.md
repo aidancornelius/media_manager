@@ -4,11 +4,12 @@ Media Manager
 PHP / BASH Basic Media Management Tool
 
 
-- About
-- License
-- Contact
+1. About / Introduction
+2. License
+3. Intended Use
+4. Contact
 
-# About
+# Introduction
 
 As with many of my other project, derived from sa.gov resources.
 
@@ -22,6 +23,10 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#Contact
+# Intended Use
+
+Management of media for inexperienced users, with some degree of automation using Handbrake. Built on Mac.
+
+# Contact
 
 aiden.cornelius@sa.gov.au
